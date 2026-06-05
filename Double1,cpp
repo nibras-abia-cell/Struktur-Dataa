@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+    Node* prev; 
+};
+
+void tambahNode(Node** head, int nilai) {
+    Node* newNode = new Node();
+    newNode->data = nilai;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+
+    if (*head == NULL) {
+        *head = newNode;
+    } else {
+        Node* temp = *head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+        newNode->prev = temp; 
+    }
+}
+
+void traversalLengkap(Node* head) {
+    Node* temp = head;
+    Node* last = NULL;
+
+    cout << "Traversal Maju:" << endl;
+    while (temp != NULL) {
+        cout << "Data: " << temp->data << endl;
+        last = temp; 
+        temp = temp->next;
+    }
+
+    cout << "\nTraversal Mundur (Bukti Doubly Linked):" << endl;
+    while (last != NULL) {
+        cout << "Data: " << last->data << endl;
+        last = last->prev;
+    }
+}
+
+int main() {
+    Node* head = NULL;
+
+    tambahNode(&head, 10);
+    tambahNode(&head, 20);
+    tambahNode(&head, 30);
+
+    traversalLengkap(head);
+
+    return 0;
+}
